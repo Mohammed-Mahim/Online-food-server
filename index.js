@@ -31,8 +31,15 @@ async function run(){
             res.json(products)
             
         })
+        // get individual product
+        app.get('/products/:id', async (req,res)=>{
+            const query = { _id: ObjectId(req.params.id) }
+            const product = await productCollection.findOne(query);
+            res.send(product);
+        });
 
-        //POST
+
+        // POST
         // app.post('/products', async(req, res)=>{
         //     const product = req.body;
             
