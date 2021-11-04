@@ -6,7 +6,7 @@ require('dotenv').config()
 
 const app = express()
 const port = process.env.PORT || 5000;
-const ObjectId = require('mongodb').objectId;
+const ObjectId = require('mongodb').ObjectId;
 
 
 // middleware 
@@ -40,13 +40,13 @@ async function run(){
             res.json(result);
         });
         // get individual package
-        app.get('/products/:id', async (req,res)=>{
+        app.get('/singleProducts/:id', async (req,res)=>{
             const query = { _id: ObjectId(req.params.id) }
             const package = await productsCollection.findOne(query);
-            res.send(package);
+            res.json(package);
+
         });
 
-         
           // confirm order
             app.post("/orders", async (req, res) => {
                 const result = await productsCollection.insertOne(req.body);
@@ -59,7 +59,7 @@ async function run(){
                 .find({ email: req.params.email })
                 .toArray();
                 res.send(result);
-  });
+            });
         // delete orders
         app.delete('/orders/:id', async(req,res)=>{
             const query = {_id: ObjectId(req.params.id)};
